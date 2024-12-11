@@ -16,17 +16,33 @@ namespace Core
         [SerializeField] private Tower _tower;
         [SerializeField] private TowerSO _towerConfiguration;
 
+        [Header("UI")]
+        [SerializeField] private PartsLeftView _partsLeftView;
+
         private BulletPool _bulletPool;
 
         private void Start()
         {
+            InitTower();
+            InitGun();
+            InitUI();
+        }
+
+        private void InitTower()
+        {
+            var towerSize = _towerConfiguration.Size;
+            var towerParts = _towerConfiguration.Parts;
+            _tower.Generate(towerSize, towerParts);
+        }
+
+        private void InitGun()
+        {
             var bulletPrefab = _gunConfiguration.BulletPrefab;
             var initBulletPoolSize = _gunConfiguration.BulletInitPoolSize;
-
-            _tower.Generate(_towerConfiguration.Size, _towerConfiguration.Parts);
-            
             _bulletPool = new BulletPool(bulletPrefab, initBulletPoolSize, _bulletStorage);
             _gun.Construct(_bulletPool);
         }
+
+        private void InitUI() => _partsLeftView.Construct(_tower);
     }
 }

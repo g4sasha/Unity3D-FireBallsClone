@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +7,7 @@ namespace Components
 {
     public class Tower : MonoBehaviour
     {
+        public event Action<int> OnSizeChanged;
         [SerializeField] private List<GameObject> _activeParts;
 
 #if UNITY_EDITOR
@@ -18,13 +20,11 @@ namespace Components
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Bullet")
-            {
-                Destroy(_activeParts[0]);
-                _activeParts.RemoveAt(0);
-                other.gameObject.SetActive(false);
-                MoveParts();
-            }
+            Destroy(_activeParts[0]);
+            _activeParts.RemoveAt(0);
+            other.gameObject.SetActive(false);
+            OnSizeChanged?.Invoke(_activeParts.Count);
+            MoveParts();
 
             if (_activeParts.Count.Equals(0))
             {
@@ -49,6 +49,8 @@ namespace Components
                 var part = Instantiate(nextPart, position, Quaternion.identity, transform);
                 _activeParts.Add(part);
             }
+
+            OnSizeChanged?.Invoke(count);
         }
 
         private void MoveParts()

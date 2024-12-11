@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 344734833}
   - component: {fileID: 344734835}
   - component: {fileID: 344734834}
+  - component: {fileID: 344734836}
   m_Layer: 0
   m_Name: PartsLeftField
   m_TagString: Untagged
@@ -541,6 +542,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344734832}
   m_CullTransparentMesh: 1
+--- !u!114 &344734836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344734832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878b74095e3f5ac4b8e59ccf0e38eeda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _partsLeftField: {fileID: 344734834}
+  _format: "\u041E\u0441\u0442\u0430\u043B\u043E\u0441\u044C {0}"
+  _tower: {fileID: 1966120123284974750}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,6 +1089,7 @@ MonoBehaviour:
   _gunConfiguration: {fileID: 11400000, guid: fda87519bea020b4ca4757cd18e7036b, type: 2}
   _tower: {fileID: 1966120123284974750}
   _towerConfiguration: {fileID: 11400000, guid: e894235d6defdc840b1ae974d17c0926, type: 2}
+  _partsLeftView: {fileID: 344734836}
 --- !u!4 &1092326595
 Transform:
   m_ObjectHideFlags: 0
