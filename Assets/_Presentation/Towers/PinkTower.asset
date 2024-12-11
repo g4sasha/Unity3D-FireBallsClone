@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d778c49d03c121149bc422d07395365f, type: 3}
+  m_Name: PinkTower
+  m_EditorClassIdentifier: 
+  Size: 16
+  Parts:
+  - {fileID: 4068137069763964553, guid: 7dac9e71780252e438d162de904ec948, type: 3}
+  - {fileID: 3937629164676846272, guid: 531a880b1c407d04eb8bb25f59f60d63, type: 3}
