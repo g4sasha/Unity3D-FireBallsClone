@@ -797,14 +797,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gun: {fileID: 281847115}
-  _bulletPrefab: {fileID: 7506275817408602038, guid: e5e8298605c796d47b9051f1a695c3c4, type: 3}
   _bulletStorage: {fileID: 226319728}
-  _bulletPoolSize: 16
+  _gunConfiguration: {fileID: 11400000, guid: fda87519bea020b4ca4757cd18e7036b, type: 2}
   _tower: {fileID: 1966120123284974750}
-  _towerSize: 100
-  _towerParts:
-  - {fileID: 4068137069763964553, guid: 7dac9e71780252e438d162de904ec948, type: 3}
-  - {fileID: 3937629164676846272, guid: 531a880b1c407d04eb8bb25f59f60d63, type: 3}
+  _towerConfiguration: {fileID: 11400000, guid: e894235d6defdc840b1ae974d17c0926, type: 2}
 --- !u!4 &1092326595
 Transform:
   m_ObjectHideFlags: 0
