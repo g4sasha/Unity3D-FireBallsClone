@@ -8,14 +8,36 @@ namespace Components
 {
     public class Gun : MonoBehaviour
     {
-        [SerializeField] private float _bulletSpawnCooldown;
-        [SerializeField] private float _bulletLifeTime;
-        [SerializeField] private Transform _firePoint;
-        [SerializeField] private InputHandler _input;
+        public event Action OnLose;
+
+        [SerializeField]
+        private float _bulletSpawnCooldown;
+
+        [SerializeField]
+        private float _bulletLifeTime;
+
+        [SerializeField]
+        private Transform _firePoint;
+
+        [SerializeField]
+        private InputHandler _input;
+
+        [SerializeField]
+        private BulletsLeftView _bulletsLeftView;
         private IPool<Bullet> _bulletPool;
         private UniTask _reloading;
+        private int _remainingShots;
+        private int _towerSize;
+        private int _mercy;
 
-        public void Construct(IPool<Bullet> bulletPool) => _bulletPool = bulletPool;
+        public void Construct(IPool<Bullet> bulletPool, int towerSize, int mercy)
+        {
+            _bulletPool = bulletPool;
+            _towerSize = towerSize;
+            _mercy = mercy;
+            _remainingShots = _towerSize + _mercy;
+            _bulletsLeftView.SetValue(_remainingShots, _towerSize + _mercy);
+        }
 
         private void OnEnable() => _input.OnFire += Shoot;
 
@@ -23,7 +45,7 @@ namespace Components
 
         public void Shoot()
         {
-            if (_reloading.Status != UniTaskStatus.Succeeded)
+            if (_reloading.Status != UniTaskStatus.Succeeded || _remainingShots == 0)
             {
                 return;
             }
@@ -32,6 +54,13 @@ namespace Components
             bullet.transform.position = _firePoint.position;
             HandleBulletLifeTime(bullet).Forget();
             _reloading = Reloading();
+            _remainingShots--;
+            _bulletsLeftView.SetValue(_remainingShots, _towerSize + _mercy);
+
+            if (_remainingShots == 0)
+            {
+                OnLose?.Invoke();
+            }
         }
 
         private async UniTask Reloading()

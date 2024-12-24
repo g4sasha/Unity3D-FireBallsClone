@@ -8,16 +8,28 @@ namespace Core
     public class Bootstrap : MonoBehaviour
     {
         [Header("Gun")]
-        [SerializeField] private Gun _gun;
-        [SerializeField] private Transform _bulletStorage;
-        [SerializeField] private GunSO _gunConfiguration;
+        [SerializeField]
+        private Gun _gun;
+
+        [SerializeField]
+        private Transform _bulletStorage;
+
+        [SerializeField]
+        private GunSO _gunConfiguration;
+
+        [SerializeField]
+        private int _mercy;
 
         [Header("Tower")]
-        [SerializeField] private Tower _tower;
-        [SerializeField] private TowerSO _towerConfiguration;
+        [SerializeField]
+        private Tower _tower;
+
+        [SerializeField]
+        private TowerSO _towerConfiguration;
 
         [Header("UI")]
-        [SerializeField] private PartsLeftView _partsLeftView;
+        [SerializeField]
+        private PartsLeftView _partsLeftView;
 
         private BulletPool _bulletPool;
 
@@ -40,7 +52,7 @@ namespace Core
             var bulletPrefab = _gunConfiguration.BulletPrefab;
             var initBulletPoolSize = _gunConfiguration.BulletInitPoolSize;
             _bulletPool = new BulletPool(bulletPrefab, initBulletPoolSize, _bulletStorage);
-            _gun.Construct(_bulletPool);
+            _gun.Construct(_bulletPool, _towerConfiguration.Size, _mercy);
         }
 
         private void InitUI() => _partsLeftView.Construct(_tower);

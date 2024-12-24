@@ -8,7 +8,9 @@ namespace Components
     public class Tower : MonoBehaviour
     {
         public event Action<int> OnSizeChanged;
-        [SerializeField] private List<GameObject> _activeParts;
+
+        [SerializeField]
+        private List<GameObject> _activeParts;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -44,7 +46,8 @@ namespace Components
             for (int i = 0; i < count; i++)
             {
                 var nextPart = partPrefabs[i % partPrefabs.Count];
-                var moveY = i * nextPart.transform.localScale.y * 2f + nextPart.transform.localScale.y;
+                var moveY =
+                    i * nextPart.transform.localScale.y * 2f + nextPart.transform.localScale.y;
                 var position = transform.position + new Vector3(0f, moveY, 0f);
                 var part = Instantiate(nextPart, position, Quaternion.identity, transform);
                 _activeParts.Add(part);
