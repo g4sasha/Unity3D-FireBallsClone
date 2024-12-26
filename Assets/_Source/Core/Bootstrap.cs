@@ -3,6 +3,7 @@ using GameManagement;
 using ObjectPool;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Core
 {
@@ -31,6 +32,15 @@ namespace Core
         [Header("UI")]
         [SerializeField]
         private PartsLeftView _partsLeftView;
+
+        [SerializeField]
+        private MessageView _messageView;
+
+        [SerializeField]
+        private string _winMessage;
+
+        [SerializeField]
+        private string _loseMessage;
 
         private BulletPool _bulletPool;
         private StateMachine<GameState> _gameStateMachine;
@@ -63,7 +73,14 @@ namespace Core
             var initBulletPoolSize = _gunConfiguration.BulletInitPoolSize;
             _bulletPool = new BulletPool(bulletPrefab, initBulletPoolSize, _bulletStorage);
             _gun.Construct(_bulletPool, _towerConfiguration.Size, _mercy);
-            _gun.OnLose += () => _gameStateMachine.ChangeState<LoseState>();
+            _gun.OnLose += () =>
+            {
+                _gameStateMachine.ChangeState<LoseState>();
+                _messageView.Show(
+                    _loseMessage,
+                    () => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex)
+                );
+            };
         }
 
         private void InitUI() => _partsLeftView.Construct(_tower);
@@ -80,6 +97,10 @@ namespace Core
             if (newSize <= 0)
             {
                 _gameStateMachine.ChangeState<WinState>();
+                _messageView.Show(
+                    _winMessage,
+                    () => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex)
+                );
             }
         }
     }

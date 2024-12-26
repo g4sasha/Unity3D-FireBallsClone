@@ -6,7 +6,7 @@ namespace ObjectPool
 {
     public class BulletPool : IPool<Bullet>
     {
-        public bool HasActive => _pool.Any(b => b.isActiveAndEnabled);
+        public bool HasActive => _pool.Any(b => b != null && b.isActiveAndEnabled);
         public int Count => _pool.Count;
         private readonly Queue<Bullet> _pool = new();
         private Bullet _bulletPrefab;
