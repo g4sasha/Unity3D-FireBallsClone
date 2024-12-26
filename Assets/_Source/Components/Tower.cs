@@ -56,7 +56,7 @@ namespace Components
             OnSizeChanged?.Invoke(count);
         }
 
-        private void MoveParts()
+        private void MoveParts() // TODO: Плавная анимация
         {
             foreach (var part in _activeParts)
             {

@@ -37,6 +37,7 @@ namespace Components
             _mercy = mercy;
             _remainingShots = _towerSize + _mercy;
             _bulletsLeftView.SetValue(_remainingShots, _towerSize + _mercy);
+            WaitForLose().Forget();
         }
 
         private void OnEnable() => _input.OnFire += Shoot;
@@ -56,26 +57,31 @@ namespace Components
             _reloading = Reloading();
             _remainingShots--;
             _bulletsLeftView.SetValue(_remainingShots, _towerSize + _mercy);
-
-            if (_remainingShots == 0)
-            {
-                OnLose?.Invoke();
-            }
         }
 
         private async UniTask Reloading()
         {
-            var cancellationToken = this.GetCancellationTokenOnDestroy();
+            var cancellationToken = gameObject.GetCancellationTokenOnDestroy();
             var time = TimeSpan.FromSeconds(_bulletSpawnCooldown);
             await UniTask.Delay(time, cancellationToken: cancellationToken);
         }
 
         private async UniTaskVoid HandleBulletLifeTime(Bullet bullet)
         {
-            var cancellationToken = this.GetCancellationTokenOnDestroy();
+            var cancellationToken = gameObject.GetCancellationTokenOnDestroy();
             var time = TimeSpan.FromSeconds(_bulletLifeTime);
             await UniTask.Delay(time, cancellationToken: cancellationToken);
             _bulletPool.ReturnToPool(bullet);
+        }
+
+        private async UniTaskVoid WaitForLose()
+        {
+            while (_bulletPool.HasActive || _remainingShots > 0)
+            {
+                await UniTask.Yield();
+            }
+
+            OnLose?.Invoke();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace GameManagement
         public override void Enter()
         {
             Debug.Log("Поражение...");
+            Time.timeScale = 0f;
         }
 
         public override void Exit() { }

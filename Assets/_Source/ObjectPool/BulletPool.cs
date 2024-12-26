@@ -1,16 +1,19 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ObjectPool
 {
     public class BulletPool : IPool<Bullet>
     {
+        public bool HasActive => _pool.Any(b => b.isActiveAndEnabled);
         public int Count => _pool.Count;
         private readonly Queue<Bullet> _pool = new();
         private Bullet _bulletPrefab;
         private Transform _poolParent;
 
-        public BulletPool(Bullet bulletPrefab, int initSize, Transform poolParent) => InitPool(bulletPrefab, initSize, poolParent);
+        public BulletPool(Bullet bulletPrefab, int initSize, Transform poolParent) =>
+            InitPool(bulletPrefab, initSize, poolParent);
 
         public void InitPool(Bullet bulletPrefab, int initSize, Transform poolParent)
         {
@@ -51,5 +54,5 @@ namespace ObjectPool
             ReturnToPool(bulletInstance);
             return bulletInstance;
         }
-    } 
+    }
 }

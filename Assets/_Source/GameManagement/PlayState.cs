@@ -8,6 +8,7 @@ namespace GameManagement
         public override void Enter()
         {
             Debug.Log("Игра запущена!");
+            Time.timeScale = 1f;
         }
 
         public override void Exit() { }
