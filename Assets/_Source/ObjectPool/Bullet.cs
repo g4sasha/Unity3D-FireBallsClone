@@ -5,8 +5,11 @@ namespace ObjectPool
     [RequireComponent(typeof(Rigidbody))]
     public class Bullet : MonoBehaviour
     {
-        [SerializeField] private float _movementSpeed;
-        [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField]
+        private float _movementSpeed;
+
+        [SerializeField]
+        private Rigidbody _rigidbody;
 
         private void OnValidate()
         {
